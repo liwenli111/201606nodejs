@@ -18,6 +18,10 @@ app.get('/hello',function(req,res){
     console.log('hellos');
     res.end('helloll');
 });
+
+app.use(function(req,res, next){
+    res.end('404');
+});
 //错误处理中间件多了一个参数 err
 app.use(function(err,req,res,next){
    console.log(err);
