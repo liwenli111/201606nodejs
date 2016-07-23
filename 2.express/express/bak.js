@@ -1,18 +1,4 @@
 /*var app = function(req,res){
-<<<<<<< HEAD
- var method = req.method.toLowerCase();//获取请求的方法
- var pathname = require('url').parse(req.url,true).pathname;//获取请求的路径
- for(var i=0;i<app.router.length;i++){
- var route = app.router[i];
- //方法名相同，路径相同或者路由配置配置为*
- if(method == route.method && (pathname == route.path || route.path=='*')){
- return route.fn(req,res);
- }
- }
- res.end(`Cannot ${method} ${pathname}`);
- }*/
-
-=======
   var method = req.method.toLowerCase();//获取请求的方法
   var pathname = require('url').parse(req.url,true).pathname;//获取请求的路径
   for(var i=0;i<app.router.length;i++){
@@ -26,7 +12,6 @@
 }*/
 var url = require('url');
 //是一个监听函数 请求和响应
->>>>>>> 82440b0053d1787e867f8120eaa7232c34d98d66
 var app = function(req,res){
     var method = req.method.toLowerCase();//获取请求的方法
     var urlObj = url.parse(req.url,true);
@@ -40,17 +25,10 @@ var app = function(req,res){
     var index =0;//定义当前迭代的路由索引
     function next(err){
         if(index>=app.router.length){
-<<<<<<< HEAD
-            return res.end("NOT router");
-        }
-        var route = app.router[index++];
-        var routeMethod = route.method;
-=======
             return res.end('Not Found');
         }
         var route = app.router[index++];//取出当前的路由配置项
         var routeMethod = route.method;//取出路由配置项方法名
->>>>>>> 82440b0053d1787e867f8120eaa7232c34d98d66
         if(err){
             //交由错误处理中间件来处理
             if(routeMethod == 'all' && route.fn.length == 4){
