@@ -26,6 +26,9 @@ app.all = function(path,fn){
         app.router.push({method:method,path:path,fn:fn});
     });
 }
+// 请求方式
+// curl -X DELETE  http://localhost:3000/hello
+
 
 app.listen = function(){
     require('http').createServer(app).listen(3000);
