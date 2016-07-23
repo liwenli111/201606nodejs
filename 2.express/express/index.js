@@ -1,21 +1,24 @@
 /*var app = function(req,res){
-  var method = req.method.toLowerCase();//获取请求的方法
-  var pathname = require('url').parse(req.url,true).pathname;//获取请求的路径
-  for(var i=0;i<app.router.length;i++){
-      var route = app.router[i];
-      //方法名相同，路径相同或者路由配置配置为*
-      if(method == route.method && (pathname == route.path || route.path=='*')){
-          return route.fn(req,res);
-      }
-  }
-  res.end(`Cannot ${method} ${pathname}`);
-}*/
+ var method = req.method.toLowerCase();//获取请求的方法
+ var pathname = require('url').parse(req.url,true).pathname;//获取请求的路径
+ for(var i=0;i<app.router.length;i++){
+ var route = app.router[i];
+ //方法名相同，路径相同或者路由配置配置为*
+ if(method == route.method && (pathname == route.path || route.path=='*')){
+ return route.fn(req,res);
+ }
+ }
+ res.end(`Cannot ${method} ${pathname}`);
+ }*/
 
 var app = function(req,res){
     var method = req.method.toLowerCase();//获取请求的方法
     var pathname = require('url').parse(req.url,true).pathname;
     var index =0;
     function next(err){
+        if(index>=app.router.length){
+            return res.end("NOT router");
+        }
         var route = app.router[index++];
         var routeMethod = route.method;
         if(err){
@@ -63,9 +66,6 @@ app.all = function(path,fn){
         app.router.push({method:method,path:path,fn:fn});
     });
 }
-// 请求方式
-// curl -X DELETE  http://localhost:3000/hello
-
 
 app.use = function(path,fn){
     //如果只传了中间件函数，没有传路径
@@ -76,8 +76,8 @@ app.use = function(path,fn){
     app.router.push({method:'all',path:path,fn:fn});
 }
 
-app.listen = function(){
-    require('http').createServer(app).listen(3000);
+app.listen = function(port){
+    require('http').createServer(app).listen(port);
 }
 
 module.exports = express;
